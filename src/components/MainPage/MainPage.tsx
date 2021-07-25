@@ -56,7 +56,7 @@ const TaskList = () => {
             <div>
                 <div className={classes.Greetings}>Hello, Wh0am1!</div>
                 <div className={classes.Greetings2}>You've got {ActiveTask.length} active tasks
-                    {loader && <span><img src={preloader} alt="preloader" /></span>} </div>
+                     {loader && <span><img src={preloader} alt="preloader" /></span>} </div>
                 <div>{!loader && <div>{ActiveTask}</div>}</div>
                 <div className={classes.Greetings2}>You've got {PerformedTask.length} performed tasks</div>
                 <div>{!loader && <div>{PerformedTask}</div>}</div>
@@ -66,7 +66,6 @@ const TaskList = () => {
 }
 
 const TaskItem = (props: any) => {
-
     const today = new Date();
     const deadline = new Date(props.date);
     const Date1 = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
@@ -79,14 +78,13 @@ const TaskItem = (props: any) => {
             setSectionColor(String('grey'));
         }
         else if (Days < 0) {
-
             setSectionColor(String('#DC143C'));
         }
         else if (Days <= 3) {
             setSectionColor(String('#FFFF00'))
         }
-    }, [Days])
-
+    }, [Days]) 
+    
     return (
         <div className={classes.Section}>
             <Section BackgroundColor={SectionColor}>

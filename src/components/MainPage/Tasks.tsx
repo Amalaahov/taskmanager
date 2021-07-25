@@ -67,7 +67,6 @@ const deactivateEditModeWithoutPut = () =>
   setEditMode(false);
 }
   const activateEditMode = () => {
-    debugger;
     setEditMode(true);
   }
   const setActive = () =>
@@ -76,9 +75,7 @@ const deactivateEditModeWithoutPut = () =>
   }
   const setPerform = () => {
     axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, {Performed:true});
-    }
-  
-  
+  }
   const taskNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTaskText((prev) => ({ ...prev, Task: e.target.value }));
   }
@@ -99,7 +96,6 @@ const deactivateEditModeWithoutPut = () =>
     axios.delete('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id);
   }
 const deadline = new Date (TaskForm.Date);
-
 
   return (
     <div className={classes.Mainpage}>
@@ -127,10 +123,8 @@ const deadline = new Date (TaskForm.Date);
               dateFormat="d MMMM yyyy, HH:mm:ss"
             /> </div>}
         {!editMode && <div><Button onClick={activateEditMode}>Edit Task</Button>
-
         {! TaskForm.Performed && <Button onClick={setPerform}>Task completed</Button>}
         { TaskForm.Performed && <Button onClick={setActive}>Activate Task</Button>}
-       
         </div>}
         {editMode && <div><Button onClick={deactivateEditMode}>Save Changes</Button><Button onClick={deactivateEditModeWithoutPut}>Back</Button>
         <DeleteButton onClick={deleteItem}>Delete</DeleteButton></div>}
@@ -138,5 +132,4 @@ const deadline = new Date (TaskForm.Date);
     </div>
   )
 }
-
 export default Tasks;

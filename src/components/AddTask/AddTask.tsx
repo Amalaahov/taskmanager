@@ -58,7 +58,6 @@ const Addtask = () => {
     Performed: boolean
   }
   const [TaskForm, setTask] = useState<TaskType>({ Task: '', Description: '', Date: '', Car: '', id: '', Performed: false });
-
   const TaskChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Task: e.target.value }));
   }
@@ -71,7 +70,6 @@ const Addtask = () => {
   const DateChange = (date: Date | [Date, Date] | null) => {
     setTask((prev) => ({ ...prev, Date: String(date) }));
   }
-
   const PutTask = () => {
     axios.post<TaskType>('https://60f53a592208920017f39f9d.mockapi.io/tasks', TaskForm);
   }
