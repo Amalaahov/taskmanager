@@ -3,7 +3,8 @@ import axios from "axios";
 import classes from "./MainPage.module.css";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
- 
+import { useHistory } from 'react-router-dom';
+
 const Input = styled.input.attrs(props => ({
   type: "text",
   size: props.size || "1em",
@@ -46,6 +47,7 @@ background: white;
 `
 
 const Tasks = (props: any) => {
+  let history=useHistory();
   type TaskType = {
     Task: string
     Description: string
@@ -72,9 +74,11 @@ const deactivateEditModeWithoutPut = () =>
   const setActive = () =>
   {
     axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, {Performed:false});     
+    return history.push('/mainpage');
   }
   const setPerform = () => {
     axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, {Performed:true});
+    return history.push('/mainpage');
   }
   const taskNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTaskText((prev) => ({ ...prev, Task: e.target.value }));
