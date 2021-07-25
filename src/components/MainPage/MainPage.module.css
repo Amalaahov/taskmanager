@@ -1,0 +1,57 @@
+.MainPage {
+    grid-area: m;
+    padding: 20px;
+   }
+
+.Greetings {
+    color: #c6c6c6;
+    font-weight: bold;
+    font-size: 50px;
+}
+.Greetings2 {
+    font-weight: bold;
+    font-size: 20px;
+    color:black;
+    padding-bottom: 10px;
+}
+.links{
+    font-weight: bold;
+    color: black;
+   text-decoration: none;
+    padding: 5px;
+}
+.carName
+{
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px;
+    color: black;   
+}
+.taskText
+{
+    font-size: 15px;
+    padding-left: 5px;
+    color: black; 
+}
+.Section
+{
+    padding-bottom: 10px;
+}
+.header
+{
+    margin-top: 20px;
+}
+.taskHeader
+{
+    color: #c6c6c6;
+    font-size: 15px;
+}
+.datePicker
+{
+  color: solid black;
+  font-size: 1em;
+  border: 0px solid black;
+  border-radius: 10px;
+  background-color: #f4f4f4;
+  padding: 10px;
+}
