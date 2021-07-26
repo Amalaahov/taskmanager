@@ -3,7 +3,7 @@ import axios from "axios";
 import classes from "./MainPage.module.css";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
-import { Redirect, useHistory } from 'react-router-dom';
+import {useHistory } from 'react-router-dom';
 
 const Input = styled.input.attrs(props => ({
   type: "text",
@@ -56,7 +56,7 @@ const Tasks = (props: any) => {
     Performed: boolean
   }
   const [editMode, setEditMode] = useState(false);
-  const [RedirectMode, setRedirectMode] = useState(false);
+  
   const [TaskForm, setTaskText] = useState<TaskType>({ Task: '', Description: '', Date: '', Car: '', id: '', Performed: false });
 
   useEffect(() => {
@@ -64,12 +64,7 @@ const Tasks = (props: any) => {
       setTaskText(response.data);
     })
   }, [])
-  const deleteItem = () => {
-    axios.delete('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id).then(()=>{
-    setEditMode(false);
-    setRedirectMode(true);
-  });
-  }
+  
   const deactivateEditModeWithoutPut = (): void => {
     setEditMode(false);
   }
@@ -135,10 +130,9 @@ const Tasks = (props: any) => {
           {TaskForm.Performed && <Button onClick={setActive}>Activate Task</Button>}
           <Button onClick={() => history.push('/mainpage')}>Back</Button>
         </div>}
-        {editMode && <div><Button onClick={deactivateEditMode}>Save Changes</Button><Button onClick={deactivateEditModeWithoutPut}>Back</Button>
-          <DeleteButton onClick={deleteItem}>Delete</DeleteButton></div>}
+        {editMode && <div><Button onClick={deactivateEditMode}>Save Changes</Button><Button onClick={deactivateEditModeWithoutPut}>Back</Button></div>}
       </Section>
-      {RedirectMode && <Redirect to="/mainpage" />}
+      
     </div>
      
   )

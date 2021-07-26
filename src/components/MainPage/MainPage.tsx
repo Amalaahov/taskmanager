@@ -1,9 +1,10 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from "./MainPage.module.css";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import preloader from "../../assets/preloader.svg";
+import ModalWindow from './Modal';
 
 
 type TaskColorType =
@@ -73,7 +74,7 @@ const TaskItem = (props: any) => {
     const Date2 = new Date(deadline.getFullYear(), deadline.getMonth() + 1, deadline.getDate());
     const Days = Math.floor((Date2.getTime() - Date1.getTime()) / (1000 * 3600 * 24));
     const [SectionColor, setSectionColor] = useState('white');
-
+    const [modalWindows, setModalWindow] = useState(false);
     useEffect(() => {
         if (props.performed === true) {
             setSectionColor(String('grey'));
@@ -90,14 +91,14 @@ const TaskItem = (props: any) => {
         <div className={classes.Section}>
             <Section BackgroundColor={SectionColor}>
                 <div>
+                    <ModalWindow id={props.id} setActive={setModalWindow} isOpened={modalWindows} />
                     <div className={classes.carName}><div className={classes.taskHeader}>Vehicle:</div>{props.Car}</div>
                     <div className={classes.taskText} ><div className={classes.taskHeader}>Task:</div>{props.Task}</div>
                     <div><hr></hr></div>
                     <div className={classes.taskText}>Days left: {Days}</div>
-                    <div> <NavLink to={'tasks/' + props.id}><Button >Open Task</Button></NavLink><Button>Delete Task</Button></div>
+                    <div> <NavLink to={'tasks/' + props.id}><Button >Open Task</Button></NavLink><Button onClick={() => setModalWindow(true)}>Delete Task</Button></div>
                 </div>
             </Section>
-           
             <div></div>
         </div>
     )

@@ -15,6 +15,7 @@ function App() {
                     <Route path='/addtask' render={() => <Addtask />} />
                     <Route path='/mainpage' exact render={() => <TaskList />} />
                     <Route path='/tasks/:taskId' render={(props) => <Tasks id={props.match.params.taskId} />} />
+               
                 </BrowserRouter>
             </div>
             <div></div>
