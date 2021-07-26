@@ -63,19 +63,20 @@ const Tasks = (props: any) => {
       setTaskText(response.data);
     })
   }, [])
-  const deactivateEditModeWithoutPut = ():void => {
+  const deactivateEditModeWithoutPut = (): void => {
     setEditMode(false);
   }
-  const activateEditMode = ():void => {
+  const activateEditMode = (): void => {
     setEditMode(true);
   }
-  const setActive = () => {
+  const setActive = (): void => {
+    setTaskText((prev) => ({ ...prev, Performed: false }))
     axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, { Performed: false });
-    return history.push('/mainpage');
   }
-  const setPerform = () => {
+  const setPerform = (): void => {
+    setTaskText((prev) => ({ ...prev, Performed: true }))
     axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, { Performed: true });
-    return history.push('/mainpage');
+
   }
   const taskNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTaskText((prev) => ({ ...prev, Task: e.target.value }));
@@ -126,7 +127,9 @@ const Tasks = (props: any) => {
         {!editMode && <div><Button onClick={activateEditMode}>Edit Task</Button>
           {!TaskForm.Performed && <Button onClick={setPerform}>Task completed</Button>}
           {TaskForm.Performed && <Button onClick={setActive}>Activate Task</Button>}
+          <Button onClick={() => history.push('/mainpage')}>Back</Button>
         </div>}
+
         {editMode && <div><Button onClick={deactivateEditMode}>Save Changes</Button><Button onClick={deactivateEditModeWithoutPut}>Back</Button>
           <DeleteButton onClick={deleteItem}>Delete</DeleteButton></div>}
       </Section>
