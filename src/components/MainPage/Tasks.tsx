@@ -3,7 +3,7 @@ import axios from "axios";
 import classes from "./MainPage.module.css";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const Input = styled.input.attrs(props => ({
   type: "text",
@@ -17,7 +17,7 @@ const Input = styled.input.attrs(props => ({
     width: 70%;
     margin: ${props => props.size};
     padding: 10px;
-  `;
+  `
 
 const Button = styled.button`
   background: black;
@@ -46,7 +46,7 @@ box-shadow: 0px 1px 20px rgba(90, 49, 100, 0.226972);
 background: white;
 `
 const Tasks = (props: any) => {
-  let history = useHistory();
+  const history = useHistory();
   type TaskType = {
     Task: string
     Description: string
@@ -56,6 +56,7 @@ const Tasks = (props: any) => {
     Performed: boolean
   }
   const [editMode, setEditMode] = useState(false);
+  const [RedirectMode, setRedirectMode] = useState(false);
   const [TaskForm, setTaskText] = useState<TaskType>({ Task: '', Description: '', Date: '', Car: '', id: '', Performed: false });
 
   useEffect(() => {
@@ -63,6 +64,11 @@ const Tasks = (props: any) => {
       setTaskText(response.data);
     })
   }, [])
+  const deleteItem = () => {
+    axios.delete('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id);
+    setEditMode(false);
+    setRedirectMode(true);
+  }
   const deactivateEditModeWithoutPut = (): void => {
     setEditMode(false);
   }
@@ -76,7 +82,6 @@ const Tasks = (props: any) => {
   const setPerform = (): void => {
     setTaskText((prev) => ({ ...prev, Performed: true }))
     axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, { Performed: true });
-
   }
   const taskNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTaskText((prev) => ({ ...prev, Task: e.target.value }));
@@ -90,17 +95,17 @@ const Tasks = (props: any) => {
   const taskDescriptionChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTaskText((prev) => ({ ...prev, Description: e.target.value }));
   }
-  const deactivateEditMode = () => {
+  const deactivateEditMode = (): void => {
     axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, TaskForm);
     setEditMode(false);
   }
-  const deleteItem = () => {
-    axios.delete('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id);
-  }
+
+
   const deadline = new Date(TaskForm.Date);
 
   return (
     <div className={classes.Mainpage}>
+
       <Section>
         <div className={classes.taskHeader}>Vehicle Name:</div>
         <div>{!editMode && <div className={classes.carName}>{TaskForm.Car}</div>}
@@ -129,11 +134,13 @@ const Tasks = (props: any) => {
           {TaskForm.Performed && <Button onClick={setActive}>Activate Task</Button>}
           <Button onClick={() => history.push('/mainpage')}>Back</Button>
         </div>}
-
         {editMode && <div><Button onClick={deactivateEditMode}>Save Changes</Button><Button onClick={deactivateEditModeWithoutPut}>Back</Button>
           <DeleteButton onClick={deleteItem}>Delete</DeleteButton></div>}
       </Section>
+      {RedirectMode && <Redirect to="/mainpage" />}
     </div>
+     
   )
+
 }
 export default Tasks;
