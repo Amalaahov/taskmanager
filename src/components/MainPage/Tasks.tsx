@@ -45,9 +45,8 @@ padding: 10px;
 box-shadow: 0px 1px 20px rgba(90, 49, 100, 0.226972);
 background: white;
 `
-
 const Tasks = (props: any) => {
-  let history=useHistory();
+  let history = useHistory();
   type TaskType = {
     Task: string
     Description: string
@@ -57,27 +56,25 @@ const Tasks = (props: any) => {
     Performed: boolean
   }
   const [editMode, setEditMode] = useState(false);
-  const [TaskForm, setTaskText] = useState<TaskType>({ Task: '', Description: '', Date: '', Car: '', id: '', Performed: false});
-  
+  const [TaskForm, setTaskText] = useState<TaskType>({ Task: '', Description: '', Date: '', Car: '', id: '', Performed: false });
+
   useEffect(() => {
     axios.get<TaskType>('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id).then(response => {
       setTaskText(response.data);
     })
   }, [])
-const deactivateEditModeWithoutPut = () =>
-{
-  setEditMode(false);
-}
-  const activateEditMode = () => {
+  const deactivateEditModeWithoutPut = ():void => {
+    setEditMode(false);
+  }
+  const activateEditMode = ():void => {
     setEditMode(true);
   }
-  const setActive = () =>
-  {
-    axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, {Performed:false});     
+  const setActive = () => {
+    axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, { Performed: false });
     return history.push('/mainpage');
   }
   const setPerform = () => {
-    axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, {Performed:true});
+    axios.put('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id, { Performed: true });
     return history.push('/mainpage');
   }
   const taskNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -99,14 +96,14 @@ const deactivateEditModeWithoutPut = () =>
   const deleteItem = () => {
     axios.delete('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id);
   }
-const deadline = new Date (TaskForm.Date);
+  const deadline = new Date(TaskForm.Date);
 
   return (
     <div className={classes.Mainpage}>
       <Section>
         <div className={classes.taskHeader}>Vehicle Name:</div>
         <div>{!editMode && <div className={classes.carName}>{TaskForm.Car}</div>}
-        {editMode && <div> <Input onChange={taskCarChange} value={TaskForm.Car} placeholder="Название машины" /></div>}  </div>
+          {editMode && <div> <Input onChange={taskCarChange} value={TaskForm.Car} placeholder="Название машины" /></div>}  </div>
         <div className={classes.taskHeader}>Task:</div>
         {!editMode && <div className={classes.carName}>{TaskForm.Task}</div>}
         {editMode && <div><Input onChange={taskNameChange} value={TaskForm.Task} /></div>}
@@ -115,23 +112,23 @@ const deadline = new Date (TaskForm.Date);
         {!editMode && <div>{TaskForm.Description}</div>}
         {editMode && <div><Input onChange={taskDescriptionChange} value={TaskForm.Description} placeholder="Название машины" /></div>}
         <div className={classes.taskHeader}>Deadline</div>
-        {!editMode && <div>{deadline.getDate()}.{deadline.getMonth()+1}.{deadline.getFullYear()}</div>}
+        {!editMode && <div>{deadline.getDate()}.{deadline.getMonth() + 1}.{deadline.getFullYear()}</div>}
         {editMode && <div> <DatePicker
-              placeholderText='Date'
-              value={TaskForm.Date}
-              onChange={DateChange}
-              className={classes.datePicker}
-              timeFormat="HH:mm"
-              timeIntervals={15}
-              timeCaption="time"
-              dateFormat="d MMMM yyyy, HH:mm:ss"
-            /> </div>}
+          placeholderText='Date'
+          value={TaskForm.Date}
+          onChange={DateChange}
+          className={classes.datePicker}
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          timeCaption="time"
+          dateFormat="d MMMM yyyy, HH:mm:ss"
+        /> </div>}
         {!editMode && <div><Button onClick={activateEditMode}>Edit Task</Button>
-        {! TaskForm.Performed && <Button onClick={setPerform}>Task completed</Button>}
-        { TaskForm.Performed && <Button onClick={setActive}>Activate Task</Button>}
+          {!TaskForm.Performed && <Button onClick={setPerform}>Task completed</Button>}
+          {TaskForm.Performed && <Button onClick={setActive}>Activate Task</Button>}
         </div>}
         {editMode && <div><Button onClick={deactivateEditMode}>Save Changes</Button><Button onClick={deactivateEditModeWithoutPut}>Back</Button>
-        <DeleteButton onClick={deleteItem}>Delete</DeleteButton></div>}
+          <DeleteButton onClick={deleteItem}>Delete</DeleteButton></div>}
       </Section>
     </div>
   )
