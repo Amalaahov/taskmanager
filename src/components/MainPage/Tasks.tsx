@@ -65,9 +65,10 @@ const Tasks = (props: any) => {
     })
   }, [])
   const deleteItem = () => {
-    axios.delete('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id);
+    axios.delete('https://60f53a592208920017f39f9d.mockapi.io/tasks/' + props.id).then(()=>{
     setEditMode(false);
     setRedirectMode(true);
+  });
   }
   const deactivateEditModeWithoutPut = (): void => {
     setEditMode(false);

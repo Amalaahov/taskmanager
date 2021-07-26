@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import classes from "./MainPage.module.css";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import preloader from "../../assets/preloader.svg";
+
 
 type TaskColorType =
     {
@@ -56,7 +57,7 @@ const TaskList = () => {
             <div>
                 <div className={classes.Greetings}>Hello, Wh0am1!</div>
                 <div className={classes.Greetings2}>You've got {ActiveTask.length} active tasks
-                     {loader && <span><img src={preloader} alt="preloader" /></span>} </div>
+                    {loader && <span><img src={preloader} alt="preloader" /></span>} </div>
                 <div>{!loader && <div>{ActiveTask}</div>}</div>
                 <div className={classes.Greetings2}>You've got {PerformedTask.length} performed tasks</div>
                 <div>{!loader && <div>{PerformedTask}</div>}</div>
@@ -83,8 +84,8 @@ const TaskItem = (props: any) => {
         else if (Days <= 3) {
             setSectionColor(String('#FFFF00'))
         }
-    }, [Days]) 
-    
+    }, [Days])
+
     return (
         <div className={classes.Section}>
             <Section BackgroundColor={SectionColor}>
@@ -93,9 +94,10 @@ const TaskItem = (props: any) => {
                     <div className={classes.taskText} ><div className={classes.taskHeader}>Task:</div>{props.Task}</div>
                     <div><hr></hr></div>
                     <div className={classes.taskText}>Days left: {Days}</div>
-                    <div> <NavLink to={'tasks/' + props.id}><Button >Open Task</Button></NavLink></div>
+                    <div> <NavLink to={'tasks/' + props.id}><Button >Open Task</Button></NavLink><Button>Delete Task</Button></div>
                 </div>
             </Section>
+           
             <div></div>
         </div>
     )

@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
 import { ChangeEvent } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 const Button = styled.button`
   background: black;
@@ -49,6 +50,7 @@ box-shadow: 0px 1px 20px rgba(90, 49, 100, 0.226972);
 `
 
 const Addtask = () => {
+  let history=useHistory();
   type TaskType = {
     Task: string
     Description: string
@@ -71,7 +73,9 @@ const Addtask = () => {
     setTask((prev) => ({ ...prev, Date: String(date) }));
   }
   const PutTask = () => {
-    axios.post<TaskType>('https://60f53a592208920017f39f9d.mockapi.io/tasks', TaskForm);
+    axios.post<TaskType>('https://60f53a592208920017f39f9d.mockapi.io/tasks', TaskForm).then(()=>{
+history.push('/mainpage');
+    });
   }
   return (
     <div className={classes.AddTaskItem}>
