@@ -23,9 +23,9 @@ const Button = styled.button`
 const Section = styled.section<TaskColorType>`
   color: white;
   border-radius: 20px;
-  border: 0px solid black;
+  border: none;
   padding: 10px;
-  box-shadow: 0px 1px 20px rgba(90, 49, 100, 0.226972);
+  box-shadow: 0 1px 20px rgba(90, 49, 100, 0.226972);
   background: ${(props) => props.BackgroundColor};
 `;
 
@@ -35,7 +35,7 @@ const TaskList = () => {
 
   useEffect(() => {
     axios
-      .get<Array<TaskType>>("https://60f53a592208920017f39f9d.mockapi.io/tasks")
+      .get<TaskType[]>("https://60f53a592208920017f39f9d.mockapi.io/tasks")
       .then((response) => {
         setTasks(response.data);
         setLoader(false);
@@ -46,29 +46,11 @@ const TaskList = () => {
     (a, b) => Number(new Date(a.Date)) - Number(new Date(b.Date))
   );
   const ActiveTask = taskMassive
-    .filter((value) => value.Performed === false)
-    .map((p) => (
-      <TaskItem
-        key={p.id}
-        date={p.Date}
-        Task={p.Task}
-        id={p.id}
-        Car={p.Car}
-        performed={p.Performed}
-      />
-    ));
+    .filter((value) => !value.Performed)
+    .map((p) => <TaskItem key={p.id} task={p} />);
   const PerformedTask = taskMassive
-    .filter((value) => value.Performed === true)
-    .map((p) => (
-      <TaskItem
-        key={p.id}
-        date={p.Date}
-        Task={p.Task}
-        id={p.id}
-        Car={p.Car}
-        performed={p.Performed}
-      />
-    ));
+    .filter((value) => value.Performed)
+    .map((p) => <TaskItem key={p.id} task={p} />);
 
   return (
     <div className={classes.MainPage}>
@@ -80,7 +62,7 @@ const TaskList = () => {
             <span>
               <img src={preloader} alt="preloader" />
             </span>
-          )}{" "}
+          )}
         </div>
         <div>{!loader && <div>{ActiveTask}</div>}</div>
         <div className={classes.Greetings2}>
@@ -92,9 +74,9 @@ const TaskList = () => {
   );
 };
 
-const TaskItem = (props: any) => {
+const TaskItem = ({ task }: { task: TaskType }) => {
   const today = new Date();
-  const deadline = new Date(props.date);
+  const deadline = new Date(task.Date);
   const Date1 = new Date(
     today.getFullYear(),
     today.getMonth() + 1,
@@ -111,12 +93,12 @@ const TaskItem = (props: any) => {
   const [SectionColor, setSectionColor] = useState("white");
   const [modalWindows, setModalWindow] = useState(false);
   useEffect(() => {
-    if (props.performed === true) {
-      setSectionColor(String("grey"));
+    if (task.Performed) {
+      setSectionColor("grey");
     } else if (Days < 0) {
-      setSectionColor(String("#DC143C"));
+      setSectionColor("#DC143C");
     } else if (Days <= 3) {
-      setSectionColor(String("#FFFF00"));
+      setSectionColor("#FFFF00");
     }
   }, [Days]);
 
@@ -125,17 +107,17 @@ const TaskItem = (props: any) => {
       <Section BackgroundColor={SectionColor}>
         <div>
           <ModalWindow
-            id={props.id}
+            id={task.id}
             setActive={setModalWindow}
             isOpened={modalWindows}
           />
           <div className={classes.carName}>
             <div className={classes.taskHeader}>Vehicle:</div>
-            {props.Car}
+            {task.Car}
           </div>
           <div className={classes.taskText}>
             <div className={classes.taskHeader}>Task:</div>
-            {props.Task}
+            {task.Task}
           </div>
           <div>
             <hr></hr>
@@ -143,7 +125,7 @@ const TaskItem = (props: any) => {
           <div className={classes.taskText}>Days left: {Days}</div>
           <div>
             {" "}
-            <NavLink to={"tasks/" + props.id}>
+            <NavLink to={"tasks/" + task.id}>
               <Button>Open Task</Button>
             </NavLink>
             <Button onClick={() => setModalWindow(true)}>Delete Task</Button>
