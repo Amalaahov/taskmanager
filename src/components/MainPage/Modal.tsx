@@ -1,4 +1,4 @@
-import "./Modal.css";
+import './Modal.css';
 import axios from "axios";
 import styled from "styled-components";
 const Button = styled.button`

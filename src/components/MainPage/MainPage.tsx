@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import classes from "./MainPage.module.css";
-import axios from "axios";
+import classes from './MainPage.module.css';
+import axios from 'axios';
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import preloader from "../../assets/preloader.svg";
+import styled from 'styled-components';
+import preloader from '../../assets/preloader.svg';
 import ModalWindow from './Modal';
 import {TaskType} from './../Types';
 
