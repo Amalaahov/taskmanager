@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { ChangeEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { TaskType } from './../Types';
+import TaskType from './../Types';
 
 const Button = styled.button`
   background: black;
