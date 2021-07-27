@@ -13,6 +13,8 @@
     "axios": "^0.21.1",
     "global": "^4.4.0",
     "json-server": "^0.16.3",
+    "onchange": "^7.1.0",
+    "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-datepicker": "^4.1.1",
     "react-dom": "^17.0.2",
@@ -32,7 +34,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier-watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}"
   },
   "eslintConfig": {
     "extends": [

@@ -42,12 +42,12 @@ const InputDescription = styled.input.attrs(props => ({
   padding: 10px;
 `
 const Section = styled.section`
-color: black;
-border-radius: 20px;
-border: none;
-padding: 10px;
-box-shadow: 0 1px 20px rgba(90, 49, 100, 0.226972);
-background: white;
+  color: black;
+  border-radius: 20px;
+  border: none;
+  padding: 10px;
+  box-shadow: 0 1px 20px rgba(90, 49, 100, 0.226972);
+  background: white;
 `
 
 const AddTask = () => {
@@ -63,7 +63,7 @@ const AddTask = () => {
   const CarChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Car: e.target.value }));
   }
-  const DateChange = (date: Date ) => {
+  const DateChange = (date: Date) => {
     setTask((prev) => ({ ...prev, Date: date }));
   }
   const PutTask = () => {
@@ -92,7 +92,8 @@ const AddTask = () => {
           </div>
           <div>Description</div>
           <div><InputDescription onChange={DescriptionChange} placeholder='Enter the description' /></div>
-          <div><Button onClick={PutTask}>Add Task</Button>
+          <div>
+            <Button onClick={PutTask}>Add Task</Button>
             <NavLink to="/"><Button> Back</Button></NavLink> </div>
         </div>
       </Section>
