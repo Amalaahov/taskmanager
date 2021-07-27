@@ -128,7 +128,7 @@ const Tasks = (props: any) => {
         {!editMode && <div><Button onClick={activateEditMode}>Edit Task</Button>
           {!TaskForm.Performed && <Button onClick={setPerform}>Task completed</Button>}
           {TaskForm.Performed && <Button onClick={setActive}>Activate Task</Button>}
-          <Button onClick={() => history.push('/mainpage')}>Back</Button>
+          <Button onClick={() => history.push('/')}>Back</Button>
         </div>}
         {editMode && <div><Button onClick={deactivateEditMode}>Save Changes</Button><Button onClick={deactivateEditModeWithoutPut}>Back</Button></div>}
       </Section>

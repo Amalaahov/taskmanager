@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { ChangeEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import {TaskType} from './../Types';
+import { TaskType } from '../Types';
 
 const Button = styled.button`
   background: black;
@@ -24,7 +24,7 @@ const Input = styled.input.attrs(props => ({
 }))`
   color: black;
   font-size: 1em;
-  border: 0px solid black;
+  border: none;
   border-radius: 10px;
   background-color: #f4f4f4;
   padding: 10px;
@@ -35,25 +35,25 @@ const InputDescription = styled.input.attrs(props => ({
 }))`
   color: black;
   font-size: 1em;
-  border: 0px black;
+  border: none;
   border-radius: 10px;
-  width:80%; 
+  width: 80%; 
   background-color: #f4f4f4;
   padding: 10px;
 `
 const Section = styled.section`
 color: black;
 border-radius: 20px;
-border: 0px solid black;
+border: none;
 padding: 10px;
-box-shadow: 0px 1px 20px rgba(90, 49, 100, 0.226972);
-  background: white;
+box-shadow: 0 1px 20px rgba(90, 49, 100, 0.226972);
+background: white;
 `
 
-const Addtask = () => {
-  let history=useHistory();
-  
-  const [TaskForm, setTask] = useState<TaskType>({ Task: '', Description: '', Date: '', Car: '', id: '', Performed: false });
+const AddTask = () => {
+  const history = useHistory();
+  const [TaskForm, setTask] = useState<TaskType>({ Task: '', Description: '', Date: new Date(), Car: '', id: '', Performed: false });
+
   const TaskChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Task: e.target.value }));
   }
@@ -63,14 +63,15 @@ const Addtask = () => {
   const CarChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Car: e.target.value }));
   }
-  const DateChange = (date: Date | [Date, Date] | null) => {
-    setTask((prev) => ({ ...prev, Date: String(date) }));
+  const DateChange = (date: Date ) => {
+    setTask((prev) => ({ ...prev, Date: date }));
   }
   const PutTask = () => {
-    axios.post<TaskType>('https://60f53a592208920017f39f9d.mockapi.io/tasks', TaskForm).then(()=>{
-history.push('/mainpage');
+    axios.post<TaskType>('https://60f53a592208920017f39f9d.mockapi.io/tasks', TaskForm).then(() => {
+      history.push('/');
     });
   }
+
   return (
     <div className={classes.AddTaskItem}>
       <Section>
@@ -83,21 +84,19 @@ history.push('/mainpage');
             <div>Deadline</div>
             <DatePicker
               placeholderText='Date'
-              value={TaskForm.Date}
+              selected={TaskForm.Date}
               onChange={DateChange}
               className={classes.datePicker}
-              timeFormat="HH:mm"
-              timeIntervals={15}
-              timeCaption="time"
-              dateFormat="d MMMM yyyy, HH:mm:ss"
+              dateFormat="d MMMM yyyy"
             />
           </div>
           <div>Description</div>
           <div><InputDescription onChange={DescriptionChange} placeholder='Enter the description' /></div>
-          <div><Button onClick={PutTask}>Add Task</Button> <NavLink to="/mainpage"> <Button> Back</Button></NavLink> </div>
+          <div><Button onClick={PutTask}>Add Task</Button>
+            <NavLink to="/"><Button> Back</Button></NavLink> </div>
         </div>
       </Section>
     </div>
   )
 }
-export default Addtask;
+export default AddTask;
