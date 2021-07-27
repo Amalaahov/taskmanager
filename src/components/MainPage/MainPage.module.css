@@ -49,21 +49,18 @@
   background-color: #f4f4f4;
   padding: 10px;
 }
-.modal__wrapper
-{
+.modal__wrapper {
   position: fixed;
-  bottom:0;
-  width:100%;
+  bottom: 0;
+  width: 100%;
   background: black;
   backdrop-filter: blur(10px);
 }
-.modal_wrapper.open
-{
+.modal_wrapper.open {
   height: 100%;
   display: block;
 }
-.modal_wrapper.open
-{
+.modal_wrapper.open {
   height: 0%;
   display: none;
 }

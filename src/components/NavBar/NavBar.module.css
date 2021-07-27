@@ -1,51 +1,42 @@
-.Navbar
-{
-   grid-area: n;
-  }
-.Navbar img
-{
+.Navbar {
+  grid-area: n;
+}
+.Navbar img {
   width: 50px;
   margin-top: 20px;
   margin-left: 20px;
 }
-.links
-{
-   color: black;
- 
-   padding: 15px;
-   text-decoration: none;
+.links {
+  color: black;
+
+  padding: 15px;
+  text-decoration: none;
 }
-.linkdiv
-{
-   margin-bottom: 10px;
+.linkdiv {
+  margin-bottom: 10px;
 }
-.stickyLink
-{
-   position: sticky;
-   top: 26%;
+.stickyLink {
+  position: sticky;
+  top: 26%;
 }
-.activeLink{
-   background-color: black;
-   color: white;
+.activeLink {
+  background-color: black;
+  color: white;
   border-radius: 0px 15px 15px 0px;
-   font-weight: bold;
-   padding-right: 70px;
-   
-   text-decoration: none;
+  font-weight: bold;
+  padding-right: 70px;
+
+  text-decoration: none;
 }
-.activeLink img
-{  
-   width: 20px;
+.activeLink img {
+  width: 20px;
 }
-.navbar img
-{
-   width: 20px;
+.navbar img {
+  width: 20px;
 }
-  .links img
-{  
-   width:20px;
+.links img {
+  width: 20px;
 }
-.activeLink img
-{
+.activeLink img {
   filter: invert(100%);
 }
