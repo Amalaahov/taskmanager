@@ -42,25 +42,10 @@
   font-size: 15px;
 }
 .datePicker {
-  color: solid black;
+  color: black;
   font-size: 1em;
-  border: 0px solid black;
+  border: none;
   border-radius: 10px;
   background-color: #f4f4f4;
   padding: 10px;
-}
-.modal__wrapper {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: black;
-  backdrop-filter: blur(10px);
-}
-.modal_wrapper.open {
-  height: 100%;
-  display: block;
-}
-.modal_wrapper.open {
-  height: 0%;
-  display: none;
 }
