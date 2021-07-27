@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { ChangeEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import { TaskType } from './../Types';
 
 const Button = styled.button`
   background: black;
@@ -51,14 +52,7 @@ box-shadow: 0px 1px 20px rgba(90, 49, 100, 0.226972);
 
 const Addtask = () => {
   let history=useHistory();
-  type TaskType = {
-    Task: string
-    Description: string
-    Date: string
-    Car: string
-    id: string
-    Performed: boolean
-  }
+  
   const [TaskForm, setTask] = useState<TaskType>({ Task: '', Description: '', Date: '', Car: '', id: '', Performed: false });
   const TaskChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Task: e.target.value }));
