@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import preloader from "../../assets/preloader.svg";
 import ModalWindow from './Modal';
+import {TaskType} from './../Types';
 
 
 type TaskColorType =
@@ -31,14 +32,7 @@ background: ${props => props.BackgroundColor};
 `
 
 const TaskList = () => {
-    type TaskType = {
-        Task: string
-        Description: string
-        Date: string
-        Car: string
-        id: string
-        Performed: boolean
-    }
+   
     const [tasks, setTasks] = useState<TaskType[]>([]);
     const [loader, setLoader] = useState(true);
 
