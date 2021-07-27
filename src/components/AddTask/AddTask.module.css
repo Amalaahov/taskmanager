@@ -1,17 +1,15 @@
 .AddTaskItem {
-    grid-area: m;
-  }
-  .datePicker
-  {
-    color: solid black;
-    font-size: 1em;
-    border: 0px solid black;
-    border-radius: 10px;
-    background-color: #f4f4f4;
-    padding: 10px;
-  }
-.addTaskText
-{
+  grid-area: m;
+}
+.datePicker {
+  color:  black;
+  font-size: 1em;
+  border: none;
+  border-radius: 10px;
+  background-color: #f4f4f4;
+  padding: 10px;
+}
+.addTaskText {
   color: black;
   padding-left: 10px;
   padding-top: 10px;
