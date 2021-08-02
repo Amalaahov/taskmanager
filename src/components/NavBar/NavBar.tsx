@@ -7,7 +7,7 @@ import logo from "./../../assets/logo.png";
 const Navbar = () => {
   return (
     <div className={classes.Navbar}>
-      <img src={logo} alt="logo" />
+      <img src={logo} alt="logo" /> 
       <div className={classes.stickyLink}>
         <div className={classes.linkdiv}>
           <NavLink
@@ -27,8 +27,11 @@ const Navbar = () => {
           >
             <img src={addtask} alt="dashboard" /> Add task
           </NavLink>
+      
         </div>
+
       </div>
+      
     </div>
   );
 };

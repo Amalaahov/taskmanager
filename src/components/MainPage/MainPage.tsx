@@ -74,6 +74,7 @@ const TaskList = () => {
   );
 };
 
+
 const TaskItem = ({ task }: { task: TaskType }) => {
   const today = new Date();
   const deadline = new Date(task.Date);
@@ -92,6 +93,75 @@ const TaskItem = ({ task }: { task: TaskType }) => {
   );
   const [SectionColor, setSectionColor] = useState("white");
   const [modalWindows, setModalWindow] = useState(false);
+//  const [currentCard, SetCurrentCard] = useState();
+
+
+const initialDnDState = {
+  draggedFrom: {} as TaskType,
+  draggedTo: {} as TaskType,
+  isDragging: false as boolean
+}
+
+const [dragAndDrop, setDragAndDrop] = useState(initialDnDState)
+
+  const OnStartFunction = (event: any, props: any) => {
+
+    setDragAndDrop({
+      ...dragAndDrop,
+      draggedFrom: props,
+      isDragging: true,
+  });
+
+    console.log('Drag', dragAndDrop);
+   
+     
+
+  
+   
+  }
+  function onLeaveFunction(event: any, props: any) {
+
+    setDragAndDrop({
+      ...dragAndDrop,
+      draggedTo: {} as TaskType
+  });
+   
+  }
+  function onOverFunction(event: any, props: any) {
+    event.preventDefault();
+    const draggedFrom = dragAndDrop.draggedFrom;
+
+    if(draggedFrom !== null) {
+
+        const draggedTo = props
+
+        if (draggedTo !== dragAndDrop.draggedTo){
+            setDragAndDrop({
+                ...dragAndDrop,
+                draggedTo: draggedTo
+            })
+        }
+    }
+ 
+
+  }
+  const onDropFunction = (event: any) => {
+    event.preventDefault();
+
+
+    setDragAndDrop({
+      ...dragAndDrop,
+      draggedFrom: {} as TaskType,
+      draggedTo: {} as TaskType,
+      isDragging: false
+  });
+  console.log('Drop', dragAndDrop);
+
+    //axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + currentCard, {
+    // Performed: task.Performed,
+    //});
+  }
+
   useEffect(() => {
     if (task.Performed) {
       setSectionColor("grey");
@@ -104,7 +174,13 @@ const TaskItem = ({ task }: { task: TaskType }) => {
 
   return (
     <div className={classes.Section}>
-      <Section BackgroundColor={SectionColor}>
+
+      <Section
+        onDragStart={(e) => OnStartFunction(e, task)}
+        onDragLeave={(e) => onLeaveFunction(e, task)}
+        onDragOver={(e) => onOverFunction(e, task)}
+        onDrop={(e) => onDropFunction(e)}
+        draggable={true} BackgroundColor={SectionColor}>
         <div>
           <ModalWindow
             id={task.id}
@@ -124,7 +200,6 @@ const TaskItem = ({ task }: { task: TaskType }) => {
           </div>
           <div className={classes.taskText}>Days left: {Days}</div>
           <div>
-            {" "}
             <NavLink to={"tasks/" + task.id}>
               <Button>Open Task</Button>
             </NavLink>
@@ -132,6 +207,7 @@ const TaskItem = ({ task }: { task: TaskType }) => {
           </div>
         </div>
       </Section>
+
       <div></div>
     </div>
   );

@@ -29,7 +29,7 @@ const ModalWindow = (props: any) => {
     >
       <div className="modal__body">
         <div className="content">
-          Are you sure you want to delete the task?
+          Are you sure you want to delete the task? {props.id}
           <Button onClick={deleteItem}>Yes</Button>
           <Button onClick={exitModalWindow}>No</Button>
         </div>

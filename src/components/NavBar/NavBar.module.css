@@ -1,5 +1,7 @@
 .Navbar {
   grid-area: n;
+  color: black;
+  
 }
 .Navbar img {
   width: 50px;
@@ -38,3 +40,4 @@
 .activeLink img {
   filter: invert(100%);
 }
+
