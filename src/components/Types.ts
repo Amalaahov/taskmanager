@@ -5,4 +5,5 @@ export type TaskType = {
   Car: string;
   id: string;
   Performed: boolean;
+  Order: string
 };

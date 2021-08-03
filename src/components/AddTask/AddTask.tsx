@@ -59,6 +59,7 @@ const AddTask = () => {
     Car: "",
     id: "",
     Performed: false,
+    Order: "",
   });
 
   const TaskChange = (e: ChangeEvent<HTMLInputElement>): void => {

@@ -50,6 +50,7 @@ const Tasks = (props: { id: String }) => {
     Car: "",
     id: "",
     Performed: false,
+    Order: "",
   });
 
   useEffect(() => {
@@ -103,7 +104,7 @@ const Tasks = (props: { id: String }) => {
   const deadline = new Date(TaskForm.Date);
 
   return (
-    <div className={classes.Mainpage}>
+    <div className={classes.MainPage}>
       <Section>
         <div className={classes.taskHeader}>Vehicle Name:</div>
         <div>
