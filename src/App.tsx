@@ -6,6 +6,7 @@ import AddTask from "./components/AddTask/AddTask";
 import Tasks from "./components/MainPage/Tasks";
 
 function App() {
+ 
   return (
     <div>
       <div id="App">

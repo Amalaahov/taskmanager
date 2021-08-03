@@ -5,5 +5,14 @@ export type TaskType = {
   Car: string;
   id: string;
   Performed: boolean;
-  Order: string
+  Order:String
+};
+
+export type AddTaskType = {
+  Task: string;
+  Description: string;
+  Date: Date;
+  Car: string;
+  id: string;
+  Performed: boolean;
 };

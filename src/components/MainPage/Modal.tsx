@@ -1,6 +1,7 @@
 import "./Modal.css";
 import axios from "axios";
 import styled from "styled-components";
+import {useHistory} from "react-router-dom";
 const Button = styled.button`
   background: black;
   color: white;
@@ -12,12 +13,13 @@ const Button = styled.button`
 `;
 
 const ModalWindow = (props: any) => {
+  const history = useHistory();
   const deleteItem = () => {
     axios
       .delete("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + props.id)
       .then(() => {
         props.setActive(false);
-        window.location.reload();
+        history.push("/");
       });
   };
   const exitModalWindow = () => {
@@ -29,7 +31,7 @@ const ModalWindow = (props: any) => {
     >
       <div className="modal__body">
         <div className="content">
-          Are you sure you want to delete the task? ID {props.id}
+          Are you sure you want to delete the task?
           <Button onClick={deleteItem}>Yes</Button>
           <Button onClick={exitModalWindow}>No</Button>
         </div>

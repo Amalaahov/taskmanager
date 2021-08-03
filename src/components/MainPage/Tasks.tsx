@@ -5,6 +5,7 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { useHistory } from "react-router-dom";
 import { TaskType } from "../Types";
+import ModalWindow from "./Modal";
 
 const Input = styled.input.attrs((props) => ({
   type: "text",
@@ -50,7 +51,7 @@ const Tasks = (props: { id: String }) => {
     Car: "",
     id: "",
     Performed: false,
-    Order: "",
+    Order:'',
   });
 
   useEffect(() => {
@@ -97,12 +98,13 @@ const Tasks = (props: { id: String }) => {
     axios.put(
       "https://60f53a592208920017f39f9d.mockapi.io/tasks/" + props.id,
       TaskForm
-    );
-    setEditMode(false);
+    ).then(()=>{
+      setEditMode(false);
+    }); 
   };
 
   const deadline = new Date(TaskForm.Date);
-
+  const [modalWindows, setModalWindow] = useState(false);
   return (
     <div className={classes.MainPage}>
       <Section>
@@ -136,7 +138,7 @@ const Tasks = (props: { id: String }) => {
             <Input
               onChange={taskDescriptionChange}
               value={TaskForm.Description}
-              placeholder="Название машины"
+              placeholder="Описание"
             />
           </div>
         )}
@@ -163,17 +165,27 @@ const Tasks = (props: { id: String }) => {
             <Button onClick={activateEditMode}>Edit Task</Button>
             {!TaskForm.Performed && (
               <Button onClick={setPerform}>Task completed</Button>
+              
             )}
             {TaskForm.Performed && (
               <Button onClick={setActive}>Activate Task</Button>
             )}
+         
             <Button onClick={() => history.push("/")}>Back</Button>
           </div>
         )}
+            <Button onClick={() => setModalWindow(true)}>Delete Task</Button>
+            <ModalWindow
+            id={TaskForm.id}
+            setActive={setModalWindow}
+            isOpened={modalWindows}
+          />
         {editMode && (
           <div>
+           
             <Button onClick={deactivateEditMode}>Save Changes</Button>
             <Button onClick={deactivateEditModeWithoutPut}>Back</Button>
+           
           </div>
         )}
       </Section>
