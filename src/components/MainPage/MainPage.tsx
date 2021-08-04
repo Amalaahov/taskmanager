@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import classes from "./MainPage.module.css";
 import axios from "axios";
-import { NavLink, Redirect, } from "react-router-dom";
 import {useHistory} from "react-router";
 import styled from "styled-components";
 import preloader from "../../assets/preloader.svg";
@@ -12,16 +11,6 @@ import { DragEvent } from "react";
 type TaskColorType = {
   BackgroundColor?: any;
 };
-
-const Button = styled.button`
-  background: black;
-  color: white;
-  font-size: 1em;
-  margin-top: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid black;
-  border-radius: 10px;
-`;
 const Section = styled.section<TaskColorType>`
   color: white;
   border-radius: 20px;
@@ -108,40 +97,35 @@ const TaskList = () => {
   }
 
   const onDropFunction = (event: DragEvent<HTMLElement>) => {
+
     if (dragAndDrop.draggedFrom.Performed === dragAndDrop.draggedTo.Performed) {
-      axios.all([
+  
           axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedFrom.id, {
-          Order: dragAndDrop.draggedTo.Order }),
-          axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedTo.id, {
-          Order: dragAndDrop.draggedFrom.Order,
-          })
-      ]
-      )
-     .then(() => {
-        window.location.reload();
+          Order: dragAndDrop.draggedTo.Order }).then(() => {
+            axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedTo.id, {
+              Order: dragAndDrop.draggedFrom.Order}).then(()=>
+        window.location.reload()
+        )
+
       });
     }
     if (dragAndDrop.draggedFrom.Performed !== dragAndDrop.draggedTo.Performed) {
       axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedFrom.id, {
         Performed: dragAndDrop.draggedTo.Performed,
       }).then(() => {
+     
         window.location.reload();
       });
     }
-    setDragAndDrop({
-      ...dragAndDrop,
-      draggedFrom: {} as TaskType,
-      draggedTo: {} as TaskType,
-      isDragging: false
-    });
+    
+   
   }
 const RedirectFunc = (props:any) =>
 {
-  
 history.push("/tasks/" + props);
 }
   const ActiveTaskLenght = tasks.filter((value) => !value.Performed);
-  const taskMassive = tasks.sort((a, b) => a.Order < b.Order ? 1 : -1);
+  const taskMassive = tasks.sort((a, b) => a.Order > b.Order ? 1 : -1);
   const ActiveTask = taskMassive.sort((a, b) => a.Performed > b.Performed ? 1 : -1)
     .map((task) => (
       <div className={classes.Section}>
