@@ -55,10 +55,7 @@ const Tasks = (props: { id: String }) => {
   });
 
   useEffect(() => {
-    axios
-      .get<TaskType>(
-        "https://60f53a592208920017f39f9d.mockapi.io/tasks/" + props.id
-      )
+    axios.get<TaskType>("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + props.id)
       .then((response) => {
         setTaskText(response.data);
       });
@@ -165,29 +162,26 @@ const Tasks = (props: { id: String }) => {
             <Button onClick={activateEditMode}>Edit Task</Button>
             {!TaskForm.Performed && (
               <Button onClick={setPerform}>Task completed</Button>
-              
             )}
             {TaskForm.Performed && (
               <Button onClick={setActive}>Activate Task</Button>
             )}
-         
             <Button onClick={() => history.push("/")}>Back</Button>
           </div>
         )}
-            <Button onClick={() => setModalWindow(true)}>Delete Task</Button>
+          
+        {editMode && (
+          <div>
+            <Button onClick={deactivateEditMode}>Save Changes</Button>
+            <Button onClick={deactivateEditModeWithoutPut}>Back</Button>
+          </div>
+        )}
+          <Button onClick={() => setModalWindow(true)}>Delete Task</Button>
             <ModalWindow
             id={TaskForm.id}
             setActive={setModalWindow}
             isOpened={modalWindows}
           />
-        {editMode && (
-          <div>
-           
-            <Button onClick={deactivateEditMode}>Save Changes</Button>
-            <Button onClick={deactivateEditModeWithoutPut}>Back</Button>
-           
-          </div>
-        )}
       </Section>
     </div>
   );

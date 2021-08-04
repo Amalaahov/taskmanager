@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import classes from "./MainPage.module.css";
 import axios from "axios";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink, } from "react-router-dom";
 import styled from "styled-components";
 import preloader from "../../assets/preloader.svg";
-
 import { TaskType } from "../Types";
 import { DragEvent } from "react";
 
@@ -139,7 +138,7 @@ const TaskList = () => {
   const ActiveTask = taskMassive.sort((a, b) => a.Performed > b.Performed ? 1 : -1)
     .map((task) => (
       <div className={classes.Section}>
-        <Section
+        <Section         
           onDragStart={(e) => OnStartFunction(e, task)}
           onDragLeave={onLeaveFunction}
           onDragOver={(e) => onOverFunction(e, task)}
@@ -166,7 +165,6 @@ const TaskList = () => {
       </div>
     ));
 
-
   return (
     <div className={classes.MainPage}>
       <div>
@@ -184,8 +182,5 @@ const TaskList = () => {
     </div>
   );
 };
-
-
-
 
 export default TaskList;

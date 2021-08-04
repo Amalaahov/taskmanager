@@ -1,7 +1,5 @@
 import "./ModalAbout.css";
-import axios from "axios";
 import styled from "styled-components";
-import {useHistory} from "react-router-dom";
 const Button = styled.button`
   background: black;
   color: white;
