@@ -49,3 +49,8 @@
   background-color: #f4f4f4;
   padding: 10px;
 }
+.sectionGrid
+{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

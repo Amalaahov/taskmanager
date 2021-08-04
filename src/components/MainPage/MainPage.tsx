@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import classes from "./MainPage.module.css";
 import axios from "axios";
-import { NavLink, } from "react-router-dom";
+import { NavLink, Redirect, } from "react-router-dom";
+import {useHistory} from "react-router";
 import styled from "styled-components";
 import preloader from "../../assets/preloader.svg";
 import { TaskType } from "../Types";
@@ -75,7 +76,7 @@ const TaskList = () => {
     draggedTo: {} as TaskType,
     isDragging: false as boolean
   }
-
+  const history = useHistory();
   const [dragAndDrop, setDragAndDrop] = useState(initialDnDState)
   const OnStartFunction = (event: any, props: TaskType) => {
     setDragAndDrop({
@@ -108,14 +109,16 @@ const TaskList = () => {
 
   const onDropFunction = (event: DragEvent<HTMLElement>) => {
     if (dragAndDrop.draggedFrom.Performed === dragAndDrop.draggedTo.Performed) {
-      axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedFrom.id, {
-        Order: dragAndDrop.draggedTo.Order,
-      }).then(() => {
-        axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedTo.id, {
+      axios.all([
+          axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedFrom.id, {
+          Order: dragAndDrop.draggedTo.Order }),
+          axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedTo.id, {
           Order: dragAndDrop.draggedFrom.Order,
-        }).then(() => {
-          window.location.reload();
-        });
+          })
+      ]
+      )
+     .then(() => {
+        window.location.reload();
       });
     }
     if (dragAndDrop.draggedFrom.Performed !== dragAndDrop.draggedTo.Performed) {
@@ -132,19 +135,23 @@ const TaskList = () => {
       isDragging: false
     });
   }
-
+const RedirectFunc = (props:any) =>
+{
+  
+history.push("/tasks/" + props);
+}
   const ActiveTaskLenght = tasks.filter((value) => !value.Performed);
   const taskMassive = tasks.sort((a, b) => a.Order < b.Order ? 1 : -1);
   const ActiveTask = taskMassive.sort((a, b) => a.Performed > b.Performed ? 1 : -1)
     .map((task) => (
       <div className={classes.Section}>
-        <Section         
+        <Section      onClick={()=>RedirectFunc(task.id)}  
           onDragStart={(e) => OnStartFunction(e, task)}
           onDragLeave={onLeaveFunction}
           onDragOver={(e) => onOverFunction(e, task)}
           onDrop={(e) => onDropFunction(e)}
           draggable={true} BackgroundColor={task.Performed ? "grey" : getColor(getDays(task.Date))}>
-          <div>
+          <div  className={classes.sectionGrid} >
             <div className={classes.carName}>
               <div className={classes.taskHeader}>Vehicle:</div>
               {task.Car}
@@ -153,13 +160,8 @@ const TaskList = () => {
               <div className={classes.taskHeader}>Task:</div>
               {task.Task}
             </div>
-            <div>
-              <hr></hr>
-            </div>
-            <div className={classes.taskText}>Days left: {getDays(task.Date)}</div>
-            <div>
-              <NavLink to={"tasks/" + task.id}><Button>Open Task</Button> </NavLink>
-            </div>
+           <div className={classes.taskText}>Days left: {getDays(task.Date)}</div>
+           
           </div>
         </Section>
       </div>
