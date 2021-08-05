@@ -16,7 +16,7 @@ import { DragEvent } from "react";
 
 type TaskColorType = {
   BackgroundColor?: any;
-};
+}
 const Section = styled.section<TaskColorType>`
   color: white;
   border-radius: 20px;
@@ -24,7 +24,7 @@ const Section = styled.section<TaskColorType>`
   padding: 10px;
   box-shadow: 0 2px 20px rgba(90, 49, 100, 0.5);
   background: ${(props) => props.BackgroundColor};
-`;
+`
 const getColor = (props: any) => {
   if (props < 0) {
     return "#DC143C";

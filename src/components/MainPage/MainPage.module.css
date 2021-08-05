@@ -1,15 +1,28 @@
+
+@font-face {
+  font-family: Quicksand ;
+  src: url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+}
+@font-face {
+  font-family: Roboto ;
+  src: url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+}
+
+
 .MainPage {
   grid-area: m;
   padding: 20px;
 }
 
 .Greetings {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
   color: #c6c6c6;
-  font-weight: bold;
   font-size: 50px;
 }
 .Greetings2 {
-  font-weight: bold;
+  font-family: Quicksand, sans-serif;
+  font-weight: 700;
   font-size: 20px;
   color: black;
   padding-bottom: 10px;
@@ -21,12 +34,15 @@
   padding: 5px;
 }
 .carName {
-  font-weight: bold;
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
   font-size: 20px;
   padding: 5px;
   color: black;
 }
 .taskText {
+  font-family: Quicksand, sans-serif;
+  font-weight: 400;
   font-size: 15px;
   padding-left: 5px;
   color: black;

@@ -89,6 +89,9 @@ const Tasks = (props: { id: String }) => {
   const DateChange = (date: Date) => {
     setTaskText((prev) => ({ ...prev, Date: date }));
   };
+  const CategoryChange = (e: any): void => {
+    setTaskText((prev) => ({ ...prev, Category: e.target.value }));
+  };
   const taskDescriptionChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTaskText((prev) => ({ ...prev, Description: e.target.value }));
   };
@@ -123,7 +126,14 @@ const Tasks = (props: { id: String }) => {
         {!editMode && <div className={classes.carName}>{TaskForm.Task}</div>}
         {editMode && (
           <div>
-            <Input onChange={taskNameChange} value={TaskForm.Task} />
+            <Input onChange={taskNameChange} value={TaskForm.Task} /><select value={TaskForm.Category} onChange={CategoryChange} className={classes.datePicker} id = "dropdown">
+            <option value='N/A'>Select Category</option>
+    <option value='Engine'>Engine</option>
+    <option value='Electronic'>Electonic</option>
+    <option value='Exterior'>Exterior</option>
+    <option value='Interior'>Interior</option>
+    <option value='Suspension'>Suspension</option>
+</select>
           </div>
         )}
         <div>
