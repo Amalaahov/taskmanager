@@ -52,6 +52,7 @@ const Tasks = (props: { id: String }) => {
     id: "",
     Performed: false,
     Order:'',
+    Category: ''
   });
 
   useEffect(() => {

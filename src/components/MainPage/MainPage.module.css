@@ -52,5 +52,10 @@
 .sectionGrid
 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 2fr 2fr 1fr 0.5fr;
+}
+
+.sectionGrid img
+{
+  width: 40px;
 }

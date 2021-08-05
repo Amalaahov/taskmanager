@@ -20,6 +20,11 @@ const ModalAboutWindow = (props: any) => {
     >
       <div className="modal__body">
         <div className="content">
+          <div className={"date"}>5 августа 2021</div>
+          <div>Категории задания:</div>
+          <div>-Добавлено 5 категорий задания (Engine, Electronic, Exterior, Interior, Suspension).</div>
+          <div>На главной странице, каждое задание отмечено иконкой, соответствующей категории.</div>
+          <div className={"date"}>3 августа 2021</div>
           <div>Добавлен Drag and Drop:</div>
           <div>-Карточки с заданиями можно менять местами. Передащить карточку на задание, с которым надо поменять местами.</div>
           <div>-Активное задание можно перенсти в выполненое. Перетащить задание на любое выполненое задание.</div>

@@ -6,6 +6,7 @@ export type TaskType = {
   id: string;
   Performed: boolean;
   Order:String
+  Category: String;
 };
 
 export type AddTaskType = {
@@ -15,4 +16,5 @@ export type AddTaskType = {
   Car: string;
   id: string;
   Performed: boolean;
+  Category: String;
 };

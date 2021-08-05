@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import classes from "./MainPage.module.css";
 import axios from "axios";
-import {useHistory} from "react-router";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import preloader from "../../assets/preloader.svg";
+import engineLogo from "../../assets/engine.png";
+import suspensionLogo from "../../assets/suspension.png";
+import questionLogo from "../../assets/question.png";
+import interiorLogo from "../../assets/interior.png";
+import exteriorLogo from "../../assets/exterior.png";
+import electronicLogo from "../../assets/electronic.png";
 import { TaskType } from "../Types";
 import { DragEvent } from "react";
 
@@ -28,29 +34,52 @@ const getColor = (props: any) => {
   }
 }
 const getDays = (date: Date) => {
-  const today = new Date();
-  const deadline = new Date(date);
   const Date1 = new Date(
-    today.getFullYear(),
-    today.getMonth() + 1,
-    today.getDate()
+    new Date().getFullYear(),
+    new Date().getMonth() + 1,
+    new Date().getDate()
   );
   const Date2 = new Date(
-    deadline.getFullYear(),
-    deadline.getMonth() + 1,
-    deadline.getDate()
+    new Date(date).getFullYear(),
+    new Date(date).getMonth() + 1,
+    new Date(date).getDate()
   );
   const Days = Math.floor(
     (Date2.getTime() - Date1.getTime()) / (1000 * 3600 * 24)
   );
   return Days;
 }
+const getCategory= (props: any)=>
+{
+  if (props === "Engine")
+  {
+    return engineLogo
+  }
+  if (props === "Suspension")
+  {
+    return suspensionLogo
+  }
+  if (props === "Interior")
+  {
+    return interiorLogo
+  }
+  if (props === "Exterior")
+  {
+    return exteriorLogo
+  }
+  if (props === "Electronic")
+  {
+    return electronicLogo
+  }
+  else
+  {
+    return questionLogo
+  }
+}
 
 const TaskList = () => {
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [loader, setLoader] = useState(true);
-
-
   useEffect(() => {
     axios
       .get<TaskType[]>("https://60f53a592208920017f39f9d.mockapi.io/tasks")
@@ -74,15 +103,13 @@ const TaskList = () => {
       isDragging: true,
     });
   }
-
-  function onLeaveFunction() {
+  const onLeaveFunction = () => {
     setDragAndDrop({
       ...dragAndDrop,
       draggedTo: {} as TaskType
     });
   }
-
-  function onOverFunction(event: any, item: TaskType) {
+  const onOverFunction = (event: any, item: TaskType) => {
     event.preventDefault();
     const draggedFrom = dragAndDrop.draggedFrom;
     if (draggedFrom !== null) {
@@ -95,47 +122,39 @@ const TaskList = () => {
       }
     }
   }
-
   const onDropFunction = (event: DragEvent<HTMLElement>) => {
 
     if (dragAndDrop.draggedFrom.Performed === dragAndDrop.draggedTo.Performed) {
-  
-          axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedFrom.id, {
-          Order: dragAndDrop.draggedTo.Order }).then(() => {
-            axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedTo.id, {
-              Order: dragAndDrop.draggedFrom.Order}).then(()=>
-        window.location.reload()
+      axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedFrom.id, {
+        Order: dragAndDrop.draggedTo.Order
+      }).then(() => {
+        axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedTo.id, {
+          Order: dragAndDrop.draggedFrom.Order
+        }).then(() =>
+          window.location.reload()
         )
-
       });
     }
     if (dragAndDrop.draggedFrom.Performed !== dragAndDrop.draggedTo.Performed) {
       axios.put("https://60f53a592208920017f39f9d.mockapi.io/tasks/" + dragAndDrop.draggedFrom.id, {
         Performed: dragAndDrop.draggedTo.Performed,
       }).then(() => {
-     
         window.location.reload();
       });
     }
-    
-   
   }
-const RedirectFunc = (props:any) =>
-{
-history.push("/tasks/" + props);
-}
   const ActiveTaskLenght = tasks.filter((value) => !value.Performed);
   const taskMassive = tasks.sort((a, b) => a.Order > b.Order ? 1 : -1);
   const ActiveTask = taskMassive.sort((a, b) => a.Performed > b.Performed ? 1 : -1)
-    .map((task) => (
+    .map((task) => ( 
       <div className={classes.Section}>
-        <Section      onClick={()=>RedirectFunc(task.id)}  
+        <Section onClick={() => history.push("/tasks/" + task.id)}
           onDragStart={(e) => OnStartFunction(e, task)}
           onDragLeave={onLeaveFunction}
           onDragOver={(e) => onOverFunction(e, task)}
           onDrop={(e) => onDropFunction(e)}
           draggable={true} BackgroundColor={task.Performed ? "grey" : getColor(getDays(task.Date))}>
-          <div  className={classes.sectionGrid} >
+          <div className={classes.sectionGrid} >
             <div className={classes.carName}>
               <div className={classes.taskHeader}>Vehicle:</div>
               {task.Car}
@@ -144,13 +163,12 @@ history.push("/tasks/" + props);
               <div className={classes.taskHeader}>Task:</div>
               {task.Task}
             </div>
-           <div className={classes.taskText}>Days left: {getDays(task.Date)}</div>
-           
+            <div className={classes.taskText}>Days left: {getDays(task.Date)}</div>
+            <div><img src={getCategory(task.Category)} alt="engine"/></div>
           </div>
         </Section>
       </div>
     ));
-
   return (
     <div className={classes.MainPage}>
       <div>
@@ -163,6 +181,7 @@ history.push("/tasks/" + props);
             </span>
           )}
         </div>
+        
         <div>{!loader && <div>{ActiveTask}</div>}</div>
       </div>
     </div>

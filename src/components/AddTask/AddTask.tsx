@@ -59,6 +59,7 @@ const AddTask = () => {
     Car: "",
     id: "",
     Performed: false,
+    Category: ""
   });
 
   const TaskChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -66,6 +67,9 @@ const AddTask = () => {
   };
   const DescriptionChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Description: e.target.value }));
+  };
+  const CategoryChange = (e: any): void => {
+    setTask((prev) => ({ ...prev, Category: e.target.value }));
   };
   const CarChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Car: e.target.value }));
@@ -97,6 +101,14 @@ const AddTask = () => {
                 placeholder="Enter the task"
               />
             </div>
+            <div><div>Category</div><div>  <select onChange={CategoryChange} className={classes.datePicker} id = "dropdown">
+            <option value='N/A'>N/A</option>
+    <option value='Engine'>Engine</option>
+    <option value='Electronic'>Electonic</option>
+    <option value='Exterior'>Exterior</option>
+    <option value='Interior'>Interior</option>
+    <option value='Suspension'>Suspension</option>
+</select></div></div>
             <div>Vehicle name</div>
             <div>
               {" "}
