@@ -28,6 +28,8 @@ const Input = styled.input.attrs((props) => ({
   border-radius: 10px;
   background-color: #f4f4f4;
   padding: 10px;
+  margin-top:7px;
+  margin-bottom:7px;
 `;
 const InputDescription = styled.input.attrs((props) => ({
   type: "text",
@@ -37,11 +39,13 @@ const InputDescription = styled.input.attrs((props) => ({
   font-size: 1em;
   border: none;
   border-radius: 10px;
-  width: 80%;
   background-color: #f4f4f4;
   padding: 10px;
 `;
 const Section = styled.section`
+margin-top:20px;
+margin-bottom:20px;
+margin-right:20px;
   color: black;
   border-radius: 20px;
   border: none;
@@ -49,6 +53,18 @@ const Section = styled.section`
   box-shadow: 0 1px 20px rgba(90, 49, 100, 0.226972);
   background: white;
 `;
+type ActiveProps = {
+  active?: boolean
+}
+const Li = styled.li<ActiveProps>`
+        background-color: ${(props) => props.active ? "black" : "white"};
+        color: ${(props) => props.active ? "white" : "black"};
+        display: inline;
+        padding: 7px 15px;
+        border: solid 1px #24255f;
+        border-radius: 5px;
+        font-size: 12px;
+    `
 
 const AddTask = () => {
   const history = useHistory();
@@ -68,8 +84,8 @@ const AddTask = () => {
   const DescriptionChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Description: e.target.value }));
   };
-  const CategoryChange = (e: any): void => {
-    setTask((prev) => ({ ...prev, Category: e.target.value }));
+  const CategoryChange = (e: any, props: any): void => {
+    setTask((prev) => ({ ...prev, Category: props }));
   };
   const CarChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTask((prev) => ({ ...prev, Car: e.target.value }));
@@ -93,51 +109,42 @@ const AddTask = () => {
       <Section>
         <div>
           <div>
-            <div>Task title</div>
-            <div>
-              <Input
-                value={TaskForm.Task}
-                onChange={TaskChange}
-                placeholder="Enter the task"
-              />
-            </div>
-            <div><div>Category</div><div>  <select onChange={CategoryChange} className={classes.datePicker} id = "dropdown">
-            <option value='N/A'>N/A</option>
-    <option value='Engine'>Engine</option>
-    <option value='Electronic'>Electonic</option>
-    <option value='Exterior'>Exterior</option>
-    <option value='Interior'>Interior</option>
-    <option value='Suspension'>Suspension</option>
-</select></div></div>
-            <div>Vehicle name</div>
-            <div>
-              {" "}
-              <Input
-                onChange={CarChange}
-                placeholder="Enter the Vehicle name"
-              />
-            </div>
-            <div>Deadline</div>
-            <DatePicker
-              placeholderText="Date"
-              selected={TaskForm.Date}
-              onChange={DateChange}
-              className={classes.datePicker}
-              dateFormat="d MMMM yyyy"
+            <Input value={TaskForm.Task} onChange={TaskChange} placeholder="Enter the task" />
+          </div>
+          <div className={classes.datePeaker}>
+            <Li active={TaskForm.Category === 'Engine'} onClick={(e) => CategoryChange(e, 'Engine')}>Engine</Li>
+            <Li active={TaskForm.Category === 'Electronic'} onClick={(e) => CategoryChange(e, 'Electronic')}>Electronic</Li>
+            <Li active={TaskForm.Category === 'Exterior'} onClick={(e) => CategoryChange(e, 'Exterior')}>Exterior</Li>
+            <Li active={TaskForm.Category === 'Interior'} onClick={(e) => CategoryChange(e, 'Interior')}>Interior</Li>
+            <Li active={TaskForm.Category === 'Suspension'} onClick={(e) => CategoryChange(e, 'Suspension')}>Suspension</Li>
+          </div>
+          <div>
+            <Input
+              onChange={CarChange}
+              placeholder="Enter the Vehicle name"
             />
           </div>
-          <div>Description</div>
-          <div>
-            <InputDescription
-              onChange={DescriptionChange}
-              placeholder="Enter the description"
-            />
+          <div className={classes.deadline}>
+            <div>
+              <InputDescription
+                onChange={DescriptionChange}
+                placeholder="Enter the description"
+              />
+            </div>
+            <div>
+              <DatePicker
+                placeholderText="Date"
+                selected={TaskForm.Date}
+                onChange={DateChange}
+                className={classes.datePicker}
+                dateFormat="d MMMM yyyy"
+              /></div>
           </div>
           <div>
             <Button onClick={PutTask}>Add Task</Button>
             <NavLink to="/">
               <Button> Back</Button>
-            </NavLink>{" "}
+            </NavLink>
           </div>
         </div>
       </Section>

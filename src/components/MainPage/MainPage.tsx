@@ -13,7 +13,9 @@ import electronicLogo from "../../assets/electronic.png";
 import { TaskType } from "../Types";
 import { DragEvent } from "react";
 
-
+type ActiveProps = {
+  active?: boolean
+}
 type TaskColorType = {
   BackgroundColor?: any;
 }
@@ -25,6 +27,16 @@ const Section = styled.section<TaskColorType>`
   box-shadow: 0 2px 20px rgba(90, 49, 100, 0.5);
   background: ${(props) => props.BackgroundColor};
 `
+const Li = styled.li<ActiveProps>`
+        background-color: ${(props) => props.active ? "black" : "white"};
+        color: ${(props) => props.active ? "white" : "black"};
+        display: inline;
+        margin-right: 3px;
+        padding: 7px 15px;
+        border: solid 1px #24255f;
+        border-radius: 5px;
+        font-size: 12px;
+    `
 const getColor = (props: any) => {
   if (props < 0) {
     return "#DC143C";
@@ -49,37 +61,30 @@ const getDays = (date: Date) => {
   );
   return Days;
 }
-const getCategory= (props: any)=>
-{
-  if (props === "Engine")
-  {
+const getCategory = (props: any) => {
+  if (props === "Engine") {
     return engineLogo
   }
-  if (props === "Suspension")
-  {
+  if (props === "Suspension") {
     return suspensionLogo
   }
-  if (props === "Interior")
-  {
+  if (props === "Interior") {
     return interiorLogo
   }
-  if (props === "Exterior")
-  {
+  if (props === "Exterior") {
     return exteriorLogo
   }
-  if (props === "Electronic")
-  {
+  if (props === "Electronic") {
     return electronicLogo
   }
-  else
-  {
+  else {
     return questionLogo
   }
 }
-
 const TaskList = () => {
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [loader, setLoader] = useState(true);
+  const [tab, setTab] = useState<String>('All')
   useEffect(() => {
     axios
       .get<TaskType[]>("https://60f53a592208920017f39f9d.mockapi.io/tasks")
@@ -145,8 +150,10 @@ const TaskList = () => {
   }
   const ActiveTaskLenght = tasks.filter((value) => !value.Performed);
   const taskMassive = tasks.sort((a, b) => a.Order > b.Order ? 1 : -1);
-  const ActiveTask = taskMassive.sort((a, b) => a.Performed > b.Performed ? 1 : -1)
-    .map((task) => ( 
+  const ActiveTask = taskMassive.filter(function (value) {
+    return (tab === value.Category) || (tab === 'All')
+  }).sort((a, b) => a.Performed > b.Performed ? 1 : -1)
+    .map((task) => (
       <div className={classes.Section}>
         <Section onClick={() => history.push("/tasks/" + task.id)}
           onDragStart={(e) => OnStartFunction(e, task)}
@@ -164,7 +171,7 @@ const TaskList = () => {
               {task.Task}
             </div>
             <div className={classes.taskText}>Days left: {getDays(task.Date)}</div>
-            <div><img src={getCategory(task.Category)} alt="engine"/></div>
+            <div><img src={getCategory(task.Category)} alt="engine" /></div>
           </div>
         </Section>
       </div>
@@ -180,8 +187,15 @@ const TaskList = () => {
               <img src={preloader} alt="preloader" />
             </span>
           )}
+          <div>
+            <Li active={tab === 'All'} onClick={() => setTab('All')}>All</Li>
+            <Li active={tab === 'Engine'} onClick={() => setTab('Engine')}>Engine</Li>
+            <Li active={tab === 'Electronic'} onClick={() => setTab('Electronic')}>Electronic</Li>
+            <Li active={tab === 'Exterior'} onClick={() => setTab('Exterior')}>Exterior</Li>
+            <Li active={tab === 'Interior'} onClick={() => setTab('Interior')}>Interior</Li>
+            <Li active={tab === 'Suspension'} onClick={() => setTab('Suspension')}>Suspension</Li>
+          </div>
         </div>
-        
         <div>{!loader && <div>{ActiveTask}</div>}</div>
       </div>
     </div>
